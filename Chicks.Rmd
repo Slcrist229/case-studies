@@ -1,0 +1,63 @@
+---
+title: "Chicks"
+author: "Shanna Aucker"
+date: "2025-02-21"
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r}
+options(repos = list(CRAN="http://cran.rstudio.com/"))
+install.packages("knitr")
+library(knitr)
+install.packages("rmarkdown")
+library(rmarkdown)
+install.packages("dataset")
+install.packages("SimDesign")
+library(SimDesign)
+library(dataset)
+library(tidyverse)
+library(ggplot2)
+library(Tmisc)
+library(janitor)
+```
+
+
+## Working with Chick Growth dataset to see if diet will affect growth rate
+
+
+```{r}
+data("ChickWeight")
+View(ChickWeight)
+```
+
+## Summarizing the mean chick weight of each diet.
+
+```{r}
+ChickWeight %>% 
+  group_by(Diet) %>% 
+  drop_na() %>% 
+  summarize(mean_chick_weight=mean(weight)) %>% 
+  arrange(-mean_chick_weight)
+```
+
+##Diet 3 has the highest mean chick weight. Checking the max chick weight by diet.
+```{r}
+ChickWeight %>% 
+  group_by(Diet) %>% 
+  drop_na() %>% 
+  summarize(max_chick_weight=max(weight)) %>%
+  arrange(-max_chick_weight)
+  
+```
+
+##Diet 3 is the winner again with the highest max weight. Let's plot some graphs so we can see the change in weight over time with each diet.
+```{r}
+ggplot(ChickWeight)+
+  geom_smooth(mapping = aes(x=Time,y=weight,color=Diet))+
+  labs(title = "Chick Weight Over Time by Diet")
+```
+
+
+## What would make this graph more informative is if I had the proper unit of measurement for the weight of each chick (?oz?) and the proper unit of measurment of time (?weeks?). I would also like to know what was in Diet number 3 that made it so effective. 
+
