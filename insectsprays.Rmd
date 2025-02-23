@@ -1,0 +1,46 @@
+---
+title: "Insect Spray"
+author: "Shanna Aucker"
+date: "2025-02-23"
+output: html_document
+---
+
+```{r}
+options(repos = list(CRAN="http://cran.rstudio.com/"))
+install.packages("knitr")
+library(knitr)
+install.packages("rmarkdown")
+library(rmarkdown)
+install.packages("dataset")
+install.packages("SimDesign")
+library(SimDesign)
+library(dataset)
+library(tidyverse)
+library(ggplot2)
+library(Tmisc)
+library(janitor)
+```
+
+Getting data from RStudio dataset.
+```{r}
+data("InsectSprays")
+View(InsectSprays)
+```
+This dataset has limited data, but can be worked with to find the most effective Insect Spray.
+```{r}
+InsectSprays %>% 
+  group_by(spray) %>% 
+  drop_na() %>% 
+  summarize(mean_bug_count=mean(count)) %>% 
+  arrange(mean_bug_count)
+```
+```{r}
+InsectSprays %>% 
+  group_by(spray) %>% 
+  drop_na() %>% 
+  summarize(min_bug_count=min(count)) %>%
+  arrange(min_bug_count)
+```
+```{r}
+ggplot(InsectSprays)+
+  geom_point(mapping = aes(x=count,y=spray,shape = spray))

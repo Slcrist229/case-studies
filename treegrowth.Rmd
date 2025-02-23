@@ -1,0 +1,42 @@
+---
+title: "dk"
+author: "Shanna Aucker"
+date: "2025-02-23"
+output: html_document
+---
+
+```
+```
+```{r}
+options(repos = list(CRAN="http://cran.rstudio.com/"))
+install.packages("knitr")
+library(knitr)
+install.packages("rmarkdown")
+library(rmarkdown)
+install.packages("dataset")
+install.packages("SimDesign")
+library(SimDesign)
+library(dataset)
+library(tidyverse)
+library(ggplot2)
+library(Tmisc)
+library(janitor)
+```
+
+```{r}
+data("Orange")
+View(Orange)
+```
+
+This dataset is pretty straight forward. I am going straight to graphing.
+```{r}
+```
+
+
+```{r}
+ggplot(Orange)+
+  geom_smooth(mapping = aes(x=age,y=circumference,color=Tree))
+```
+
+
+
